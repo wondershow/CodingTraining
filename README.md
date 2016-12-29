@@ -1,2 +1,1 @@
-# codingpractice
-For my programming interview logging
+# Job Interview Preparation
