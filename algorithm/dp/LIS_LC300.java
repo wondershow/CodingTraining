@@ -7,6 +7,9 @@ package algorithm.dp;
 
 import java.util.Arrays;
 
+/**
+ * Classical 1D DP.
+ * */
 public class LIS_LC300 {
 
 	public static void main(String[] args) {
