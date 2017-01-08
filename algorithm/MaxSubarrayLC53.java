@@ -1,5 +1,8 @@
 package algorithm;
-
+/**
+ * See problem statement at 
+ * https://leetcode.com/problems/maximum-subarray/
+ * **/
 public class MaxSubarrayLC53 {
 
 	public static void main(String[] args) {
@@ -12,7 +15,7 @@ public class MaxSubarrayLC53 {
         }
         
         /**
-            create a prefix sum
+        create a prefix sum
         **/
         int len = nums.length;
         int[] sum = new int[len + 1];

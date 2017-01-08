@@ -8,7 +8,11 @@ package algorithm.dp;
 /**
  * See problem statement at
  * http://www.lintcode.com/en/problem/longest-increasing-continuous-subsequence/#
- * **/
+ * 
+ * 
+ * 
+ * 
+ ***/
 public class LICS_LintCode {
 
 	public static void main(String[] args) {
@@ -16,7 +20,6 @@ public class LICS_LintCode {
 	}
 	
 	public int longestIncreasingContinuousSubsequence(int[] A) {
-        // Write your code here
         if (A == null || A.length == 0) {
             return 0;
         }

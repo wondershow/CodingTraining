@@ -8,7 +8,10 @@ package algorithm.dp;
 /**
  * See the problem statement at:
  * https://leetcode.com/problems/maximal-square/
- * **/
+ *  
+ * 
+ * 
+ ***/
 public class MaximalSquare_LC221 {
 
 	public static void main(String[] args) {
