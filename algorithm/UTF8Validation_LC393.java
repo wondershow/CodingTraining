@@ -4,7 +4,14 @@
  * Jan 12, 2017
  */
 package algorithm;
-
+/**
+ * See problem statement at
+ * https://leetcode.com/problems/utf-8-validation/
+ * 
+ * This is tedious bit-related question. just
+ * follow the rules of UTF8 and implement it.
+ * 
+ * **/
 public class UTF8Validation_LC393 {
 
 	public static void main(String[] args) {
