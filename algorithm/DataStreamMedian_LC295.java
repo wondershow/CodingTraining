@@ -4,6 +4,10 @@
  * Jan 14, 2017
  */
 package algorithm;
+
+import java.util.Comparator;
+import java.util.PriorityQueue;
+
 /**
  * See problem statement at
  * https://leetcode.com/problems/find-median-from-data-stream/
