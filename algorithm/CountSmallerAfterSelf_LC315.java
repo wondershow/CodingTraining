@@ -117,5 +117,78 @@ public class CountSmallerAfterSelf_LC315 {
         root.sum += root.left.sum;
         root.sum += root.right.sum;
     }
-
+    
+    
+    /*******
+     * Solution 2:
+     * This solution uses mergesort invariants to count the results.
+     * errors made:
+     * 1. failed to handle two equal elements in the merging phase.
+     * 
+     * Possible improvement, ditching using a wrapper class.
+     * *******/
+    
+    class Wrapper {
+        int val, cnt, index;
+        Wrapper(int v, int i) {
+            val = v;
+            cnt = 0;
+            index = i;
+        }
+    }
+    
+    public List<Integer> countSmaller1(int[] nums) {
+        List<Integer> res = new ArrayList();
+        if (nums == null || nums.length == 0) {
+            return res;
+        }
+        
+        Wrapper[] w = new Wrapper[nums.length];
+        Wrapper[] aux = new Wrapper[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            w[i] = new Wrapper(nums[i], i);
+            res.add(0);
+        }
+        mergesort(w, aux, 0, w.length - 1);
+        
+        for (int i = 0; i < w.length; i++) {
+            res.set(w[i].index, w[i].cnt);
+        }
+        
+        return res;
+    }
+    
+    private void mergesort(Wrapper[] w, Wrapper[] aux, int lo, int hi) {
+        if (lo >= hi) return;
+        int mid = (lo + hi) >>> 1;
+        mergesort(w, aux, lo, mid);
+        mergesort(w, aux, mid + 1, hi);
+        for (int i = lo; i <= hi; i++) {
+            aux[i] = w[i];
+        }
+        
+        int i = lo, j = mid + 1, k = lo;
+        while (i <= mid || j <= hi) {
+            if (i > mid) {
+                w[k++] = aux[j++];
+            } else if (j > hi) {
+                w[k] = aux[i];
+                w[k].cnt += hi - mid;
+                k++;
+                i++;
+            } else if (aux[i].val <= aux[j].val) {
+                w[k] = aux[i];
+                w[k].cnt += j - mid - 1; 
+                k++;
+                i++;
+            } else {
+                w[k++] = aux[j++];
+            }
+        }
+    }
+    
+    
+    
+    
+    
 }
