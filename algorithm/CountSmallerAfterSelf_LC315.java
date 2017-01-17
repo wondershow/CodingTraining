@@ -188,7 +188,63 @@ public class CountSmallerAfterSelf_LC315 {
     }
     
     
+    /**
+     * Solution 3:
+     * Small improvement over solution 2
+     * ***/
+    public List<Integer> countSmaller3(int[] nums) {
+        List<Integer> res = new ArrayList();
+        if (nums == null || nums.length == 0) {
+            return res;
+        }
+        
+        int[] indices = new int[nums.length];
+        int[] counts = new int[nums.length];
+        int[] aux = new int[nums.length];
+        
+        for (int i = 0; i < nums.length; i++) {
+            indices[i] = i;
+            counts[i] = 0;
+        }
+        
+        mergesort(nums, counts, indices, aux, 0, nums.length - 1);
+        
+        for (int i = 0; i < nums.length; i++) {
+            res.add(counts[i]);
+        }
+        
+        return res;
+    }
     
-    
+    private void mergesort(int[] values, int[] counts, int[] indices, int[] aux, int lo, int hi) {
+        if (lo >= hi) return;
+        int mid = (lo + hi) >>> 1;
+        mergesort(values, counts, indices, aux, lo, mid);
+        mergesort(values, counts, indices, aux, mid + 1, hi);
+        
+        for (int i = lo; i <= hi; i++) {
+            aux[i] = indices[i];
+        }
+        
+        int i = lo, j = mid + 1, k = lo;
+        
+        while (i <= mid || j <= hi) {
+            if (i > mid) {
+                indices[k++] = aux[j++];
+            } else if (j > hi) {
+                indices[k] = aux[i];
+                counts[indices[k]] += hi - mid;
+                k++;
+                i++;
+            } else if (values[aux[i]] <= values[aux[j]]) {
+                indices[k] = aux[i];
+                counts[indices[k]] += j - mid - 1; 
+                k++;
+                i++;
+            } else {
+                indices[k++] = aux[j++];
+            }
+        }
+    }
     
 }
