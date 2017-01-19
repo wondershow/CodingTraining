@@ -7,7 +7,17 @@ package algorithm;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * 
+ * https://leetcode.com/problems/binary-watch/
+ * Mistakes made:
+ * 1. the termination condition of the search process.
+ *    wrong: when the position index is 0, that will miss the last digit
+ *    correct: when the index = -1;
+ * 2. 0:00 is correct while 12:00 is invalid
+ *    so hour should be < 12s
+ * 
+ * **/
 public class BinaryWatch_LC401 {
 
 	public static void main(String[] args) {

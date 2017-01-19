@@ -16,6 +16,11 @@ import java.util.Map;
  * This is a typical Union-Find problem. Besides the standard
  * union-find solution, one big thing is how to handle duplicate
  * elements in the given array.
+ * 
+ * another mistake made
+ * uf array starts from 0 or 1 may have difference consequences
+ * in the coding of the remap numbering of nodes
+ * 
  * **/
 public class LongestConsecutiveSeq_LC128 {
 
