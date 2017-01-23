@@ -27,18 +27,20 @@ public class ShortestWordDistance_LC243 {
 	}
 	
 	public int shortestDistance(String[] words, String word1, String word2) {
-        if (words == null || words.length == 0) {
+		if (words == null || words.length == 0) {
             return 0;
         }
         
-        Map<String, List<Integer>> locations = new HashMap();
-        for (int i = 0; i < words.length; i++) {
-            locations.putIfAbsent(words[i], new ArrayList());
-            locations.get(words[i]).add(i);
-        }
+        List<Integer> l1 = new ArrayList();
+        List<Integer> l2 = new ArrayList();
         
-        List<Integer> l1 = locations.get(word1);
-        List<Integer> l2 = locations.get(word2);
+        for (int i = 0; i < words.length; i++) {
+            if (words[i].equals(word1)) {
+                l1.add(i);
+            } else if (words[i].equals(word2)) {
+                l2.add(i);
+            }
+        }
         
         int idx1 = 0, idx2 = 0;
         int res = Integer.MAX_VALUE;
