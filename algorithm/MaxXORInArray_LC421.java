@@ -6,8 +6,7 @@
 package algorithm;
 
 /**
- * https://leetcode.com/submissions/detail/90180944/
- * 
+https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/ * 
  * 
  * 
  * */
