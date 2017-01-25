@@ -29,13 +29,15 @@ class Person {
 	int maxProduce = 100000;
 	boolean alternative = true;
 	
+	private Object lock = new Object();
+	
 	public Person() {
 		
 	}
 	
 	public void produce() throws InterruptedException{
 		while (true) {
-			synchronized(this) {
+			synchronized(lock) {
 				while (buffer.size() == capacity) {
 					wait();
 				}
@@ -50,7 +52,7 @@ class Person {
 	
 	public void consume() throws InterruptedException{
 		while (true) {
-			synchronized(this) {
+			synchronized(lock) {
 				while (buffer.size() == 0) {
 					wait();
 				}
