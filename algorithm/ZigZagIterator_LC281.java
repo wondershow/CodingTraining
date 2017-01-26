@@ -7,41 +7,34 @@ package algorithm;
 /**
  * See problem statement at:
  * https://leetcode.com/problems/zigzag-iterator/
- * 
+ * edge case missing: when the 1st list is an empty set
  * **/
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 public class ZigZagIterator_LC281 {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
 	}
 
-	int totalSize = 0, cur = 0, ptr = 0;
-    int[] ptrs;
-    List<List<Integer>> lists;
+	LinkedList<Iterator> list;
     public ZigZagIterator_LC281(List<Integer> v1, List<Integer> v2) {
-        totalSize = v1.size() + v2.size();
-        ptrs = new int[2];
-        lists = new ArrayList();
-        lists.add(v1);
-        lists.add(v2);
+        list = new LinkedList<Iterator>();
+        if (v1 != null && v1.size() > 0) list.add(v1.iterator());
+        if (v2 != null && v2.size() > 0) list.add(v2.iterator());
     }
 
     public int next() {
-        while (ptrs[ptr] >= lists.get(ptr).size()) {
-            ptr = (ptr + 1) % lists.size();
-        }
-        int res = lists.get(ptr).get(ptrs[ptr]);
-        ptrs[ptr]++;
-        cur++;
-        ptr = (ptr + 1) % lists.size(); 
-        return res++; 
+        Iterator it = list.poll();
+        Integer res = (Integer)it.next();
+        if (it.hasNext()) list.add(it);
+        return res; 
     }
 
     public boolean hasNext() {
-        return cur < totalSize;
+        return list.size() > 0;
     }
 }

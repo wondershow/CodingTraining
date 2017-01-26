@@ -4,6 +4,9 @@
  * Jan 23, 2017
  */
 package algorithm;
+
+import java.util.Arrays;
+
 /**
  * https://leetcode.com/problems/bomb-enemy/
  * 
