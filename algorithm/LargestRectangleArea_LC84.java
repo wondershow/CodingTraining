@@ -30,6 +30,10 @@ public class LargestRectangleArea_LC84 {
     for the right boundary, we always consider the stack top element, since if
     stack top is smaller than the new incoming element, then its right boundary 
     is determined. 
+    
+    NOTE: the scan should be from 0 to N (not N - 1), when i at N,
+          height will be specifically assigned to 0, to make all previous
+          rectangle be counted
     */
     public int largestRectangleArea(int[] height) {
         // write your code here
