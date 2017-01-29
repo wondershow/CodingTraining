@@ -17,26 +17,27 @@ public class LongestSubstring2Distinct_LC159 {
 
 	}
 	
-	public int lengthOfLongestSubstringKDistinct(String s, int k) {
-        if (s == null || s.length() == 0 ) {
+	public int lengthOfLongestSubstringTwoDistinct(String s) {
+        if (s == null || s.length() == 0) {
             return 0;
         }
+        
         int[] hash = new int[256];
-        int countOfDistinct = 0;
-        int res = 0;
+        int count = 0, res = 0;
         for (int i = 0, j = 0; i < s.length(); i++) {
             while (j < s.length()) {
-                if (countOfDistinct == k && hash[s.charAt(j)] == 0) {
+                if (count == 2 && hash[s.charAt(j)] == 0) {
                     break;
-                } else {
-                    if (hash[s.charAt(j++)]++ == 0) {
-                        countOfDistinct++;
-                    }
+                }
+                if (hash[s.charAt(j++)]++ == 0) {
+                    count++;
                 }
             }
+            
             res = Math.max(res, j - i);
+            
             if (hash[s.charAt(i)]-- == 1) {
-                countOfDistinct--;
+                count--;
             }
         }
         

@@ -7,8 +7,8 @@ package algorithm;
 /**
  * See problem statement at 
  * https://leetcode.com/problems/missing-ranges/
- * 
- * one thing to be aware overflow!
+ * mistakes made:
+ * 1. one thing to be aware overflow!
  * **/
 import java.util.ArrayList;
 import java.util.List;
