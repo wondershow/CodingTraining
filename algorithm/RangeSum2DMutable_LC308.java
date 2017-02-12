@@ -116,3 +116,59 @@ public class RangeSum2DMutable_LC308 {
 
 	}
 }
+/**
+ * This is a 2D Fenwick Tree solution. coding much easier  
+ * performance should be better
+ * ***/
+class Solution2{
+	int[][] treeBIT;
+    int[][] orig;
+    
+    int m, n;
+    public Solution2(int[][] matrix) {
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0)
+            return;
+        m = matrix.length;
+        n = matrix[0].length;
+        orig = new int[m][n];
+        treeBIT = new int[m + 1][n + 1];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                update(i, j, matrix[i][j]);
+            }
+        }
+    }
+    
+    
+    public void update(int row, int col, int val) {
+        int delta = val - orig[row][col];
+        orig[row][col] = val;
+        row++;
+        col++;
+        for (int x = row; x <= m; x += x & -x) {
+            for (int y = col; y <= n; y+= y & -y) {
+                treeBIT[x][y] += delta;
+            }
+        }
+    }
+    
+    public int sumRegion(int row1, int col1, int row2, int col2) {
+        return sumFrom00(row2, col2) - sumFrom00(row2, col1 - 1) - sumFrom00(row1 - 1, col2) + sumFrom00(row1 - 1, col1 - 1);
+    }
+    
+    public int sumFrom00(int row, int col) {
+        if (row < 0 || col < 0) return 0;
+        int res = 0;
+        row++;
+        col++;
+        for (int x = row; x > 0; x -= x & -x) {
+            for (int y = col; y > 0; y -= y & -y) {
+                res += treeBIT[x][y];
+            }
+        }
+        return res;
+    }
+}
+
+
+
