@@ -246,5 +246,68 @@ public class CountSmallerAfterSelf_LC315 {
             }
         }
     }
-    
 }
+
+class Solution4 {
+	
+	class Wrap {
+        int index, rank, val;
+        Wrap(int i, int v) {
+            index = i;
+            val = v;
+        }
+    }
+    
+    int[] fw;
+    
+    public List<Integer> countSmaller(int[] nums) {
+        List<Integer> res = new ArrayList<Integer>();
+        if (nums == null || nums.length == 0) {
+            return res;
+        }
+        int len = nums.length;
+        Wrap[] wraps = new Wrap[len];
+        Wrap[] aux = new Wrap[len];
+        for (int i = 0; i < len; i++) {
+            wraps[i] = new Wrap(i, nums[i]);
+        }
+        
+        Arrays.sort(wraps, new Comparator<Wrap>() {
+            public int compare(Wrap a, Wrap b) {
+                return a.val - b.val;
+            }
+        });
+        
+        for (int i = 0; i < len; i++) {
+            wraps[i].rank = i;
+            aux[wraps[i].index] = wraps[i];
+        }
+        
+        fw = new int[len + 1];
+        
+        for (int i = len - 1; i >= 0; i--) {
+            res.add(0, query(aux[i].rank));
+            update(aux[i].rank + 1);
+        }
+        
+        return res;
+    }
+    
+    private void update(int i) {
+        for (; i < fw.length; i += i & -i) {
+            fw[i] += 1;
+        }
+    }
+    
+    private int query(int i) {
+        int res = 0;
+        for (; i > 0; i -= i & -i) {
+            res += fw[i];
+        }
+        return res;
+    }
+	
+	
+	
+}
+
