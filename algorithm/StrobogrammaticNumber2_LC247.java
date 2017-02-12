@@ -15,7 +15,10 @@ package algorithm;
  *  strings with "0".
  * **/
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class StrobogrammaticNumber2_LC247 {
 
@@ -50,5 +53,54 @@ public class StrobogrammaticNumber2_LC247 {
             res.add("6" + str + "9");
         }
         return res;
+    }
+    
+    
+    /**
+     * another solution based on combination
+     * */
+    public List<String> findStrobogrammatic2(int n) {
+        Map<Character, Character> map = new HashMap();
+        map.put('0', '0');
+        map.put('1', '1');
+        map.put('8', '8');
+        map.put('6', '9');
+        map.put('9', '6');
+        char[] chars = new char[n];
+        List<String> res = new LinkedList();
+        if (n % 2 != 0) {
+            chars[n / 2] = '0';
+            helper(n / 2 - 1, chars, n, res, map);
+            chars[n / 2] = '1';
+            helper(n / 2 - 1, chars, n, res, map);
+            chars[n / 2] = '8';
+            helper(n / 2 - 1, chars, n, res, map);
+        } else {
+            helper(n / 2 - 1, chars, n, res, map);
+        }
+        
+        return res;
+    }
+    
+    private void helper(int pos, char[] chars, int n, List<String> res, Map<Character, Character> map) {
+        if (pos <= 0) {
+            if (pos == 0) {
+                String tmp = "1896";
+                for (int i = 0; i < tmp.length(); i++) {
+                    chars[0] = tmp.charAt(i);
+                    chars[n - 1] = map.get(tmp.charAt(i));
+                    res.add(new String(chars));
+                }
+            } else {
+                res.add(new String(chars));
+            }
+            return;
+        }
+        String tmp = "01896";
+        for (int i = 0; i < tmp.length(); i++) {
+            chars[pos] = tmp.charAt(i);
+            chars[n - pos - 1] = map.get(tmp.charAt(i));
+            helper(pos - 1, chars, n, res, map);
+        }
     }
 }
