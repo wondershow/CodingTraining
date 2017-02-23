@@ -42,7 +42,7 @@ class Postman {
 			try {
 				Thread.sleep(500);
 				System.out.println("msg (" + msg + ")" + "on the way"
-						+ "any other ppl can use this channcel to send");
+						+ ", no other ppl can use this channcel to send");
 			} catch(Exception e) {
 				System.out.println("Thread exception");
 			}

@@ -49,6 +49,7 @@ public class CopyBooks_Lintcod437 {
         
         return dp[len][k];
     }
+	
 	/**
 	 * Binary search the minimum minutes to copy a book with k ppl
 	 * 

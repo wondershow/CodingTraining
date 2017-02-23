@@ -29,7 +29,6 @@ public class RangeSumQueryMutable_LC307 {
         }
     }
     
-    
     public int sumRange(int i, int j) {
         return rangeFrom0(j) - rangeFrom0(i - 1);
     }
