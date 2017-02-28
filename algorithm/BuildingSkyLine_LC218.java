@@ -124,4 +124,49 @@ public class BuildingSkyLine_LC218 {
         });
         return wraps;
     }
+    
+    /**
+     * Solution 2, use a sortedmap(red-black BST) to solve the problem
+     * 
+     * **/
+    
+    public List<int[]> getSkyline2(int[][] buildings) {
+        List<int[]> res = new ArrayList<int[]>();
+        if (buildings == null || buildings.length == 0) {
+            return res;
+        }
+        
+        Wrapper[] lines = sortVerticalLines(buildings);
+        TreeMap<Integer, Integer> freq = new TreeMap();
+        
+        
+        for (int i = 0; i < lines.length; i++) {
+            int curHeight = freq.size() == 0 ? 0 : freq.lastKey();
+            Wrapper w = lines[i];
+            if (w.end == 1) { // enter
+                if (w.h > curHeight) {
+                    res.add(new int[] {w.x, w.h});
+                }
+                if (freq.containsKey(w.h)) {
+                    freq.put(w.h, freq.get(w.h) + 1);
+                } else {
+                    freq.put(w.h, 1);
+                }
+            } else { // leave
+                if (w.h == curHeight && freq.get(w.h) == 1) {
+                    freq.remove(curHeight);
+                    int nextHeight = freq.size() == 0 ? 0 : freq.lastKey();
+                    res.add(new int[]{w.x, nextHeight});
+                } else {
+                    if (freq.get(w.h) > 1) {
+                        freq.put(w.h, freq.get(w.h) - 1);
+                    } else {
+                        freq.remove(w.h);
+                    }
+                }
+            }
+        }
+        
+        return res;
+    }
 }
