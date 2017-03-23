@@ -11,6 +11,12 @@ import java.util.Stack;
  * https://leetcode.com/problems/decode-string/
  * The key technology in this problem is
  * the use of stack
+ * Keys: 1. when sees a digit, try to piles up all digits together
+ *       2. when sees a alphabet, try to pile up all alphabet together
+ *       3. add "[" to separate different items
+ *       4. when sees "]" pop up the top of the stack, then pop up "[", then 
+ *          pop up the repreat numbers. after repetation, DO check if this and previous
+ *          item(stack top) can be merged. 
  * 
  * **/
 public class DecodeString_LC394 {
