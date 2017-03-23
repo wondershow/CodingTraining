@@ -52,19 +52,12 @@ public class BombEnemy_LC361 {
             int rowCount = 0;
             for (int slow = 0, fast = 0; slow < n; slow++) {
                 while (fast < n) {
-                    if (grid[i][fast] == 'W') {
-                        break;
-                    }
-                    if (grid[i][fast] == 'E') {
-                       rowCount++; 
-                    }
-                    fast++;
+                    if (grid[i][fast] == 'W') break;
+                    if (grid[i][fast++] == 'E') rowCount++; 
                 }
                 if (grid[i][slow] == '0') {
                     int vcount = countVertical(i, slow, verticalCount, verticalPointer, grid);
                     res = Math.max(res, rowCount + vcount);
-                    //System.out.println("vcount = " + vcount + ", i = " + i + ", j = " + slow + ", rowCount = " + rowCount
-                    // + ", res = " + res);
                 }
                 if (grid[i][slow] == 'W') {
                     fast++;
@@ -77,30 +70,25 @@ public class BombEnemy_LC361 {
     }
     
     private int countVertical(int row, int col, int[] verticalCount, int[] verticalPointer, char[][] grid) {
-        if (verticalPointer[col] >= row) {
-            return verticalCount[col];
-        } else {
-            if (grid[row][col] == 'W') {
-                return 0;
-            } else {
-                //Note, this while is very important, since one time of vertical search 
-                // may not cover the current cell of that column, since there may be
-                //more than 2 walls from the last terminated search place to the current cell
-                while (verticalPointer[col] <= row) {
-                    verticalCount[col] = 0;
-                    
-                    //the beginning of the row should be carefully set
-                    int r = verticalPointer[col] + 1;
-                    
-                    for (; r < grid.length && grid[r][col] != 'W'; r++) {
-                        if (grid[r][col] == 'E') {
-                            verticalCount[col]++;
-                        }
-                    }
-                    verticalPointer[col] = r;
+        if (verticalPointer[col] >= row) return verticalCount[col];
+        if (grid[row][col] == 'W') return 0;
+        
+        //Note, this while is very important, since one time of vertical search 
+        // may not cover the current cell of that column, since there may be
+        //more than 2 walls from the last terminated search place to the current cell
+        while (verticalPointer[col] <= row) {
+            verticalCount[col] = 0;
+            
+            //the beginning of the row should be carefully set
+            int r = verticalPointer[col] + 1;
+            
+            for (; r < grid.length && grid[r][col] != 'W'; r++) {
+                if (grid[r][col] == 'E') {
+                    verticalCount[col]++;
                 }
-                return verticalCount[col];
             }
+            verticalPointer[col] = r;
         }
+        return verticalCount[col];
     }
 }
