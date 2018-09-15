@@ -1,0 +1,27 @@
+class Solution {
+    // Use a stack, if we see a '#', pop once (no need to push '#')
+    // always remember that '#' is one more than non-# characters
+    public boolean isValidSerialization(String preorder) {
+        if (preorder == null || preorder.equals("")) {
+            return true;
+        }
+        String[] nodes = preorder.split(",");                                                         
+        Stack<String> s = new Stack();
+        int i = 0;
+        
+        for (; i < nodes.length; i++) {
+            String node = nodes[i];
+            if (!node.equals("#")) {
+                s.push(node);
+            }  else { // when we see a '#' (empty node)
+                if (s.isEmpty()) {
+                    break;
+                } else {
+                    s.pop();
+                }
+            }
+        }
+        
+        return s.isEmpty() && i == nodes.length - 1;
+    }
+}
