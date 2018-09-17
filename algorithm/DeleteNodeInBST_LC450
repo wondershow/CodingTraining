@@ -1,0 +1,38 @@
+/**
+Sth like recursion.
+if the key is smaller than my current root, do deletion in the left tree
+if larger , do deletion in right tree
+if eqauls, then sawp key and right next value (node), do the deletion (of the next value, not the given key) 
+on the right subtree
+**/
+
+class Solution {
+    public TreeNode deleteNode(TreeNode root, int key) {
+        if (root == null) {
+            return null;
+        }
+        if (key < root.val) {
+            root.left = deleteNode(root.left, key);
+        } else if (key > root.val) {
+            root.right = deleteNode(root.right, key);
+        } else {
+            if (root.left == null) {
+                root = root.right;
+            } else if (root.right == null) {
+                root = root.left;
+            } else {
+                root.val = minTreeVal(root.right);
+                root.right = deleteNode(root.right, root.val);
+            }
+        }
+        
+        return root;
+    }
+    
+    private int minTreeVal(TreeNode root) {
+        while (root.left != null) {
+            root = root.left;
+        }
+        return root.val;
+    }
+}
