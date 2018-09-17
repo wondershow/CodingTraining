@@ -30,3 +30,30 @@ class Solution {
 }
 
 */
+
+/*
+//This solution uses a trick that, when we iterative preorder traverse a BST, 
+//the stack always pop out a min value at even. All the elements in the stack from bottom to pop 
+//is from large to small and the unvisited nodes are the right-descendent of the node on the stack bottom
+// therefore, the stack top element is always the minimum element. 
+class Solution {
+    public boolean verifyPreorder(int[] preorder) {
+        if (preorder == null) {
+            return true;
+        }
+        Stack<Integer> stack = new Stack();
+        int low = Integer.MIN_VALUE;
+        for (int i = 0; i < preorder.length; i++) {
+            if (preorder[i] < low) {
+                return false;
+            }
+            while (!stack.isEmpty() && preorder[i] > stack.peek()) {
+                low = stack.pop();
+            }
+            stack.push(preorder[i]);
+        }
+        return true;
+    }
+}
+
+*/
