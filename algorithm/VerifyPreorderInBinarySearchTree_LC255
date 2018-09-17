@@ -38,22 +38,18 @@ class Solution {
 // therefore, the stack top element is always the minimum element. 
 class Solution {
     public boolean verifyPreorder(int[] preorder) {
-        if (preorder == null) {
-            return true;
-        }
-        Stack<Integer> stack = new Stack();
+        Stack<Integer> path = new Stack();
         int low = Integer.MIN_VALUE;
-        for (int i = 0; i < preorder.length; i++) {
-            if (preorder[i] < low) {
+        for (int node : preorder) {
+            if (node < low) {
                 return false;
             }
-            while (!stack.isEmpty() && preorder[i] > stack.peek()) {
-                low = stack.pop();
+            while (!path.isEmpty() && node > path.peek()) {
+                low = path.pop();
             }
-            stack.push(preorder[i]);
+            path.push(node);
         }
         return true;
     }
 }
-
 */
