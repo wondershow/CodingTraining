@@ -1,0 +1,64 @@
+// This solution uses BFS to do codec. Since in a BFS, it is a level-order traversal. 
+// So we have two pointers, fast and slow. Both Start from the head of a queue, at each slow position, add
+// its left and right (non-empty child) to a queue. 
+public class Codec {
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        StringBuilder sb = new StringBuilder("");
+        if (root == null) {
+            return sb.toString();
+        }
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        sb.append(",").append(root.val);
+        while (q.peek() != null) {
+            TreeNode parent = q.poll();
+            if (parent.left != null) {
+                q.add(parent.left);
+            }
+            if (parent.right != null) {
+                q.add(parent.right);
+            }
+            appendTreeNode(parent.left, sb);
+            appendTreeNode(parent.right, sb);
+        }
+        return sb.substring(1, sb.length() - 1).toString();
+    }
+    
+    private void appendTreeNode(TreeNode root, StringBuilder sb) {
+        sb.append(",");
+        if (root == null) {
+            sb.append("#");
+        } else {
+            sb.append(root.val);
+        }
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        if (data == null || data.length() == 0) {
+            return null;
+        }
+        String[] values = data.split(",");
+        TreeNode root = new TreeNode(Integer.parseInt(values[0]));
+        Queue<TreeNode> queue = new LinkedList();
+        queue.add(root);
+        TreeNode parent = null;
+        int i = 1;
+        while (i < values.length) {
+            if (queue.peek() == null) {
+                break;
+            }
+            parent = queue.remove();
+            if (!values[i++].equals("#")) {
+                parent.left = new TreeNode(Integer.parseInt(values[i - 1]));
+                queue.add(parent.left);
+            } 
+            if (i < values.length && !values[i++].equals("#")) {
+                parent.right = new TreeNode(Integer.parseInt(values[i - 1]));
+                queue.add(parent.right);
+            }
+        }
+        return root;
+    }
+}
