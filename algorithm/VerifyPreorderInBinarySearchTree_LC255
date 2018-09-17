@@ -1,0 +1,32 @@
+/*
+
+//This solution is very simple. Try to make use (root, lTree, rTree) of a BST's preorder, verify this 
+// feature at each subtree.
+class Solution {
+    public boolean verifyPreorder(int[] preorder) {
+        if (preorder == null || preorder.length <= 1) {
+            return true;
+        }
+        return verifyHelper(preorder, 0, preorder.length - 1);
+    }
+    
+    private boolean verifyHelper(int[] preorder, int start, int end) {
+        if (start > preorder.length - 1 || start >= end || end < 0) {
+            return true;
+        }
+        int boundary = start + 1;
+        for (; boundary <= end; boundary++) {
+            if (preorder[boundary] > preorder[start]) {
+                break;
+            }
+        }
+        for (int i = boundary; i <= end; i++) {
+            if (preorder[i] < preorder[start]) {
+                return false;
+            }
+        }
+        return verifyHelper(preorder, start + 1, boundary - 1) &&  verifyHelper(preorder,boundary, end);
+    }
+}
+
+*/
