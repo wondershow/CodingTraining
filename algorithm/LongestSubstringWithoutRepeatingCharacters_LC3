@@ -1,0 +1,23 @@
+class Solution {
+    /**
+    Typical sliding window and standard template.
+    **/
+    public int lengthOfLongestSubstring(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+        int[] freq = new int[256];
+        int res = 0;
+        
+        for (int l = 0, r = 0, repeat = 0; l < s.length(); l++) {
+            while (r < s.length() && freq[s.charAt(r)] == 0) {
+                freq[s.charAt(r)]++;
+                r++;
+            }           
+            res = Math.max(res, r - l);
+            freq[s.charAt(l)]--;
+        }
+        
+        return res;
+    }
+}
