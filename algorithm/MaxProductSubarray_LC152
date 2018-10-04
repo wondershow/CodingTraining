@@ -1,0 +1,40 @@
+class Solution {
+    
+    /**
+    A good way to think about this kind of subarray max/min problem 
+    is to consider it to be a math deduction problem.
+    Proof the condition change from n to n + 1 (n is the length of an array) and
+    set the initial condition that when n = 0 or 1. Then start!
+    Like this problem
+    
+    when array grows from n to n + 1 (the extra element is, say x)
+    we suppose there is an variable localMax that stores the maxProduct from n to its previous element
+    and localMin stores the minProduct from n to its previous element.
+    from n to n + 1, 
+    localMax(n+1) has only 3 candidates: localMin(n) * x, x , localMax(n) * x 
+    
+    use the iterative law to update localMax, localMin and gMax,
+    
+    the initial condition is easy. when the size of array is 1. localMin, localMax and gMax = nums[0];
+    
+    **/
+    public int maxProduct(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        
+        int cur = nums[0];
+        int localMin = cur, localMax = cur;
+        int gMax = nums[0];
+        
+        for (int i = 1; i < nums.length; i++) {
+            int tmpLocalMax = Math.max(nums[i], Math.max(localMax * nums[i], localMin * nums[i]));
+            int tmpLocalMin = Math.min(nums[i], Math.min(localMax * nums[i], localMin * nums[i]));
+            gMax = Math.max(tmpLocalMax, gMax);
+            localMax = tmpLocalMax;
+            localMin = tmpLocalMin;
+        }
+        
+        return gMax;
+    }
+}
