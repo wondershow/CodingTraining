@@ -14,6 +14,9 @@ public class PeakElement_LC162 {
 
 	}
 	
+	/**
+	 * Solution 1
+	 * */
 	public int findPeakElement(int[] nums) {
         
         int len = nums.length;
@@ -33,6 +36,36 @@ public class PeakElement_LC162 {
         if (nums[lo] > nums[hi]) {
             return lo;
         }
+        return hi;
+    }
+	
+	/**
+	 * Solution 2
+	 * Compared to solution 1, This solution uses less comparison and more "binary search".
+	 * The key is to understand the "loop invariant" [lo, hi] has the invariant that nums[lo] >= nums[lo - 1]
+	 * nums[hi] >= nums[hi + 1]
+	 * **/
+    public int findPeakElement2(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return -1;
+        }
+        
+        int N = nums.length;
+        int lo = 0, hi = N - 1;
+        
+        while (lo + 1 < hi) {
+            int mid = lo + (hi - lo) / 2;
+            if (nums[mid] > nums[mid + 1]) {
+                hi = mid;
+            } else {
+                lo = mid;
+            }
+        }
+        
+        if (nums[lo] > nums[hi]) {
+            return lo;
+        }
+        
         return hi;
     }
 }
