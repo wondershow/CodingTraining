@@ -43,6 +43,18 @@
 
 class Solution:
     def depthSum(self, nestedList: List[NestedInteger]) -> int:
+        def dfs(ni_list, depth):
+            res = 0
+            for ni in ni_list:
+                if ni.isInteger():
+                    res += ni.getInteger() * depth
+                else:
+                    res += dfs(ni.getList(), depth + 1)
+            return res
+        return dfs(nestedList, 1)
+    
+    
+    def depthSum1(self, nestedList: List[NestedInteger]) -> int:
         stack, res = [], 0, 
         stack.append([nestedList, 0, 1])
         while stack:
@@ -55,4 +67,4 @@ class Solution:
             else:
                 stack[-1][1] += 1
                 stack.append([ni[index].getList(), 0, depth + 1])
-        return res    
+        return res   
