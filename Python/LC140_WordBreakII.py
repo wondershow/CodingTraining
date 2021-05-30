@@ -1,7 +1,11 @@
 class Solution:
     """
         DP using memo
+        O(n^2) time if not considering string contatnation, it could be o(2^n)
         
+        consider the case 'aaaaa' where the word_dict is [a,aa,aaa,aaaa,aaaaa]
+        
+        so the result is a,aa,aaa (adding commas inbetween every neighboring a-a, so it is 2^n in the worst case. 
     """
     def wordBreak(self, s: str, wordDict: List[str]) -> List[str]:
         def helper(string, word_dict, memo):
