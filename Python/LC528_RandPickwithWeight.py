@@ -1,23 +1,24 @@
 class Solution:
 
     def __init__(self, w: List[int]):
-        self.prefix_sum, running = [], 0
-        for i in w:
-            running += i
-            self.prefix_sum.append(running)
-    
+        self.w = w
+        self.prefix = [0]
+        for a in w:
+            self.prefix.append(self.prefix[-1] + a)
+        self.prefix.pop(0)
     """
-    This binary search is ugly, need to improve it.
+    e.g. w = [1,2,3,4]
+    prefix = [1, 3, 6, 10]
+    the rand number has to be 1 ~ 10
+    0 ~ 9 is a hassel
     """
     def pickIndex(self) -> int:
-        pick = random.randint(1, self.prefix_sum[-1])
-        lo, hi = 0, len(self.prefix_sum) - 1
-        while lo + 1 < hi:
+        rand_val = random.randint(1, self.prefix[-1])
+        lo, hi = 0, len(self.prefix) - 1
+        while lo < hi:
             mid = (lo + hi) // 2
-            if self.prefix_sum[mid] <= pick:
-                lo = mid
+            if self.prefix[mid] < rand_val:
+                lo = mid + 1
             else:
                 hi = mid
-        if self.prefix_sum[lo] < pick <= self.prefix_sum[hi]:
-            return hi
         return lo
