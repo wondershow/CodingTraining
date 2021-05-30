@@ -1,36 +1,35 @@
 class Solution:
     def alienOrder(self, words: List[str]) -> str:
-        graph, alphabet = defaultdict(set), set()
+        """
+        1. build graph
+        2. build indegrees
+        3. do topo sort
+        this version is consise. build graph, indegrees, alphabet in 1 pass
+        then do toposort, check valid in 2 places. 
+        """
+        graph = defaultdict(list)
+        indegrees = defaultdict(int)
+        alphabet = set()
         for word1, word2 in zip(words, words[1:]):
             alphabet.update(list(word1))
             for a, b in zip(word1, word2):
                 if a != b:
-                    graph[a].add(b)
+                    graph[a].append(b)
+                    indegrees[b] += 1
                     break
             else:
                 if len(word1) > len(word2):
                     return ""
         alphabet.update(list(words[-1]))
-        
-        indegrees = defaultdict(int)
-        for _, kids in graph.items():
-            for kid in kids:
-                indegrees[kid] += 1
-                
-        res, que = [], []
-        for c in alphabet:
-            if indegrees[c] == 0:
-                que.append(c)
-        
-        
+        que = [c for c in alphabet if indegrees[c] == 0]
+        topo_order = []
         while que:
-            c = que.pop(0)
-            res.append(c)
-            for kid in graph[c]:
-                indegrees[kid] -= 1
-                if indegrees[kid] == 0:
-                    que.append(kid)
-        if len(res) != len(alphabet):
-            return ""
-        
-        return "".join(res)
+            node = que.pop(0)
+            topo_order.append(node)
+            for neighbor in graph[node]:
+                indegrees[neighbor] -= 1
+                if indegrees[neighbor] == 0:
+                    que.append(neighbor)
+        if len(topo_order) == len(alphabet):
+            return "".join(topo_order)
+        return "" 
