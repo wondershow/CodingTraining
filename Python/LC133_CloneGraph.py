@@ -5,33 +5,28 @@ class Node:
         self.val = val
         self.neighbors = neighbors if neighbors is not None else []
 """
-"""
-Mistakes made:
-1. Did not consider the edge case of empty tree
-"""
+
 class Solution:
+    """
+    This is a one pass BFS solution. 
+    We use a mapping 'visited' to keep mapping from old to new node
+    During BFS, whenever we want to add a node to the bfs que, it is time to clone that node to put in the visited mapping.
+    Meanwhile, when we are iterating one nodes neighbor, we add the neighbor's clone to node's clone's neighbor list.
+    The reason is that we iterate each edge exactly 2 times. one time b is a's neigbor, the other time a is b's neighbor.
+    
+    """
     def cloneGraph(self, node: 'Node') -> 'Node':
         if not node:
-            return None
-        old_to_new = {}
-        que, seen = [node], {node}
-        while que:
-            p = que.pop()
-            new_p = Node(p.val)
-            old_to_new[p] = new_p
-            for nei in p.neighbors:
-                if nei not in seen:
-                    seen.add(nei)
-                    que.append(nei)
-                    
-        que, seen = [node], {node}
+            return node
         
+        seen, visited = {node}, {node : Node(node.val, [])}
+        que = [node]
         while que:
-            p = que.pop()
-            for nei in p.neighbors:
-                old_to_new[p].neighbors.append(old_to_new[nei])
-                if nei not in seen:
-                    seen.add(nei)
-                    que.append(nei)
-        
-        return old_to_new[node]
+            n = que.pop(0)
+            for neighbor in n.neighbors:
+                if neighbor not in seen:
+                    seen.add(neighbor)
+                    que.append(neighbor)
+                    visited[neighbor] = Node(neighbor.val, [])
+                visited[n].neighbors.append(visited[neighbor])
+        return visited[node]
