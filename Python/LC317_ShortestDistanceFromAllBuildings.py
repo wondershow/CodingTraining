@@ -1,6 +1,8 @@
 class Solution:
     """
     Not sure why the DFS version is not working
+    Note that we can not use |i - x0| + |j - y0| to compute distance. 
+    We have do use bfs 'd + 1', no idea why
     """
     def shortestDistance(self, grid: List[List[int]]) -> int:
         deltas = [[0, 1], [1, 0], [0, -1], [-1, 0]]
