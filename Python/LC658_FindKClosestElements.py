@@ -13,6 +13,9 @@ class Solution:
             we have two windows here w1 : [mid: mid + k] ( ending at arr[mid + k - 1])
                                      w2 : [mid + 1, mid + k + 1] (ending at arr[mid + k])
                                      
+            w1:       A[mid], A[mid + 1], ..., A[mid + k - 1]
+            w2:               A[mid + 1], ..., A[mid + k - 1], A[mid + k]
+            moving right means making the situation worse (the if condition), so we exclude right half search space.                          
                             
             the if comparison is to compare if w2 window (moving right wards) can find a better solution, if <=, that means movign rightwards 
             only enlarges the gap, so we need to exclude that half soltuion
