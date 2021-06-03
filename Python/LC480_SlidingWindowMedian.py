@@ -53,7 +53,7 @@ class Solution:
                 # Adding to min_heap, while deleting in max_heap, we need to call 'move' to 
                 # do one-step re-balancing
                 """
-                if nums[i - k] < min_heap[0][0]:
+                if nums[i - k] < max_heap[0][0]:
                 ^^^^ This statement is not working here. Since in one edge case, when all elements
                 are equal, using this condition will only add elements to min_heap, the heaps will not
                 be balanced.
