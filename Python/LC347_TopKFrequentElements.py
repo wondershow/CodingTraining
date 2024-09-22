@@ -6,11 +6,26 @@ class Solution:
     To do it o(N), we need to do quick select to find kth largest number
     """
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        freq = Counter(nums)
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: List[int]
+        """
+        counts = Counter(nums)
         heap = []
-        res = []
-        for key, count in freq.items():
-            heappush(heap, [count, key])
+        for num, freq in counts.items():
+            heappush(heap, (freq, num))
             if len(heap) > k:
                 heappop(heap)
         return [b for a, b in heap]
+
+    def topKFrequent(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: List[int]
+        """
+        counts = Counter(nums)
+        topK = sorted(counts.items(), key=lambda item:item[1], reverse=True)[:k]
+        return [a for a, b in topK]
+
