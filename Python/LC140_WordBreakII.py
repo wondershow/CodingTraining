@@ -26,3 +26,23 @@ class Solution:
         memo = {}
         helper(s, set(wordDict), memo)
         return memo[s]
+
+    """
+    This is a backtracking solution which is less efficient.
+    O(2^N) the backtracking recursing tree could have 2^N leafs. 
+    """
+    def wordBreak2(self, s: str, wordDict: List[str]) -> List[str]:
+        N, res, wordDict, path = len(s), [], set(wordDict), []
+
+        def backtracking(pos, path):
+            if pos == N:
+                res.append(" ".join(path))
+                return
+            for i in range(pos + 1, N + 1):
+                if s[pos:i] in wordDict:
+                    path.append(s[pos:i])
+                    backtracking(i, path)
+                    path.pop()
+
+        backtracking(0, path)
+        return res
