@@ -9,44 +9,42 @@ class Codec:
 
     def serialize(self, root):
         """Encodes a tree to a single string.
-        
+
         :type root: TreeNode
         :rtype: str
-        """
-        def helper(root, res):
-            if not root:
-                res.append("#")
-                return
-            res.append(str(root.val))
-            helper(root.left, res)
-            helper(root.right, res)
-        
-        res = []
-        helper(root, res)
-        while res and res[-1] == "#":
-            res.pop()
-        return ",".join(res)
-        
 
-    def deserialize(self, input_value):
+        For this problem, we use preorder output plus all the empty leaves (#) to serilize a tree.
+        Whenenver there is a #, that means a child tree travels to the end. I think my explaination is not 
+        very convincing.
+        """
+        def preorder(node, path):
+            if not node:
+                path.append("#")
+                return
+            path.append(str(node.val))
+            preorder(node.left, path)
+            preorder(node.right, path)
+        path = []
+        preorder(root, path)
+        return " ".join(path)
+
+    def deserialize(self, data):
         """Decodes your encoded data to tree.
-        
         :type data: str
         :rtype: TreeNode
         """
-        if not input_value:
-            return None
-        
-        values = input_value.split(",")
         index = 0
-        def builder(data):
+
+        def build_tree(values):
             nonlocal index
-            if index >= len(data) or data[index] == "#":
+            if values[index] == '#':
                 index += 1
                 return None
-            root = TreeNode(int(data[index]))
-            index += 1
-            root.left = builder(data)
-            root.right = builder(data)
+            else:
+                root = TreeNode(values[index])
+                index += 1
+                # Build left child starting from index + 1
+                root.left = build_tree(values)
+                root.right = build_tree(values)
             return root
-        return builder(values)
+        return build_tree(data.split(" "))
