@@ -1,5 +1,14 @@
 class Solution:
     """
+    Sort and return version
+    """
+    def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
+        def comparator(p):
+            return p[0] ** 2 + p[1] ** 2
+        points.sort(key=comparator)
+        return points[:k]
+    
+    """
     Carefully derive if we need a max heap or minheap, what to put as compare key in the heap
     Cautious!!
     """
