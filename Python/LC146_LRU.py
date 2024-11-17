@@ -54,6 +54,63 @@ class LRUCache:
             self._add_key_lru(key, value)
         if self.size > self.cap:
             self._remove_key_lru(self.head.right.key)
+
+
+
+class LRUCache1:
+    """
+    @param: capacity: An integer
+    """
+    def __init__(self, capacity: int):
+        # do intialization if necessary
+        self.cap = capacity
+        self.count = 0
+        self.head, self.tail = Node(0, 0), Node(0, 0)
+        self.head.right, self.tail.left = self.tail, self.head
+        self.node_by_key = {}
+
+    def _add_to_head(self, node):
+        old_first = self.head.right
+        self.head.right, node.left = node, self.head
+        node.right, old_first.left = old_first, node
+        self.node_by_key[node.key] = node
+        self.count += 1
+    
+    def _remove_node(self, node):
+        before, after = node.left, node.right
+        before.right, after.left = after, before
+        del self.node_by_key[node.key]
+        self.count -= 1
+    
+    """
+    @param: key: An integer
+    @return: An integer
+    """
+    def get(self, key: int) -> int:
+        # write your code here
+        if key not in self.node_by_key:
+            return -1
+        node = self.node_by_key[key]
+        self._remove_node(node)
+        self._add_to_head(node)
+        return node.val
+
+    """
+    @param: key: An integer
+    @param: value: An integer
+    @return: nothing
+    """
+    def put(self, key: int, value: int) -> None:
+        # write your code here
+        if key in self.node_by_key:
+            node = self.node_by_key[key]
+            node.val = value
+            self._remove_node(node)
+        else:
+            node = Node(key, value)
+        self._add_to_head(node)
+        if self.count > self.cap:
+            self._remove_node(self.tail.left)
         
 
 
