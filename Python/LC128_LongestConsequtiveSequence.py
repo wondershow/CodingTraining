@@ -36,3 +36,30 @@ class Solution:
                 uf.union(i, index_by_val[num - 1])
             index_by_val[num] = i
         return uf.max_component_size()
+
+    def longest_consecutive3(self, nums: List[int]) -> int:
+        """
+        This one seems to be easier to code up
+        """
+        nums_set, res = set(nums), 1
+        for num in nums:
+            len = 1
+            if num in nums_set:
+                nums_set.remove(num)
+            left = right = 0
+
+            i = 1
+            while num - i in nums_set:
+                left += 1
+                nums_set.remove(num - i)
+                i += 1
+            
+            i = 1
+            while num + i in nums_set:
+                right += 1
+                nums_set.remove(num + i)
+                i += 1
+            
+            res = max(res, right + left + 1)
+
+        return res
