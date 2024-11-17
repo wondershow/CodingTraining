@@ -22,3 +22,28 @@ class Solution(object):
             stack.append(i)
 
         return [map_next_greater[i] for i in range(N)]
+
+    def nextGreaterElements(self, nums: List[int]) -> List[int]:
+        """
+        Scan from left to right until 2*N
+        keep montonic non-increasing (note not "decreasing" as there might be duplicates,
+        when there is a duplicate, both items should be in the stack) stack. 
+        At each position, to keep the monotocity if an old stack popped (say this is x), x's first 
+        big element on the right is cur item.
+        some points:
+        1. We iterate 2 * N to meet the "circular".
+        2. When we hit the max value after N, break.
+        3. in the stack we store the index not the actual value. 
+        """
+
+        N = len(nums)
+        stack, res, max_ele = [], [-1] * N, nums[0]
+        for i in range(2 * N):
+            num = nums[i % N]
+            while stack and nums[stack[-1]] < num:
+                res[stack.pop()] = num
+            stack.append(i % N)
+            max_ele = max(num, max_ele)
+            if i >= N and num == max_ele:
+                break
+        return res
