@@ -27,9 +27,11 @@ class Solution:
     QuickSelect version
     """
     def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
-        aux = [[x*x + y*y, x, y] for x, y in points]
-        def kth(aux, lo, hi, k):
-            if lo >= hi:
+        def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
+        aux = [(x ** 2 + y ** 2, x, y) for x , y in points]
+    
+        def quick_divde(aux, lo, hi, rank):
+            if lo > hi:
                 return
             pivot = aux[lo][0]
             cur, left, right = lo, lo, hi
@@ -41,13 +43,19 @@ class Solution:
                     right -= 1
                 else:
                     aux[cur], aux[left] = aux[left], aux[cur]
-                    cur, left = cur + 1, left + 1
-            if left - lo + 1 <= k <= right - lo + 1:
+                    left, cur = left + 1, cur + 1
+            """
+                When the while loop ends:
+                < < < < < = = = = = = > > > > 
+                          l         r c
+                l => left, r => right, c=> cur
+            """
+            if left - lo + 1 <= rank <= cur - lo:
                 return
-            elif k < left - lo + 1:
-                kth(aux, lo, left - 1, k)
+            elif left - lo + 1 > rank:
+                quick_divde(aux, lo, left - 1, rank)
             else:
-                kth(aux, cur, hi, k - (right - lo + 1))
-        
-        kth(aux, 0, len(aux) - 1, k)
-        return [[x, y] for _, x, y in aux[:k]]
+                quick_divde(aux, cur, hi, rank - (cur - lo))
+
+        quick_divde(aux, 0, len(aux) - 1, k)
+        return [[x[1], x[2]] for x in aux[:k]]
