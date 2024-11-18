@@ -42,3 +42,26 @@ class Solution:
             return helper(nums, i, hi, rank - (right - lo + 1))
         
         return helper(nums, 0, len(nums) - 1, len(nums) + 1 - k)
+
+
+    def findKthLargest(self, nums: List[int], k: int) -> int:
+        """
+        This method is much easier but it requires extra space. (Not in-pace)
+        """
+        def quick_select(array, k):
+            pivot = random.choice(array)
+            large, equal, small = [], [], []
+            for num in array:
+                if num < pivot:
+                    small.append(num)
+                elif num > pivot:
+                    large.append(num)
+                else:
+                    equal.append(num)
+            if k <= len(large):
+                return quick_select(large, k)
+            elif len(large) + len(equal) < k:
+                return quick_select(small, k - (len(large) + len(equal)))
+            return pivot
+
+        return quick_select(nums, k)
