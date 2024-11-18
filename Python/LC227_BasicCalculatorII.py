@@ -91,3 +91,31 @@ class Solution:
                 pre = int(pre / num)
                 
         return res
+
+    def calculate(self, s: str) -> int:
+        """
+        This is a much easy one.
+        in each iteration, we read in a number and an op,
+        if the op of last iteration is "+-" push the current num onto stack,
+        if the op of last iteration is "*/" do the operation between current num and stack top, then push result to the stack. 
+        Finally return stack sum. 
+        """
+        s = s.replace(" ", "")
+        stack, num, op, index = [], 0, "+", 0
+        while index < len(s):
+            while index < len(s) and s[index].isdigit():
+                num = num * 10 + int(s[index])
+                index += 1
+            if op == "+":
+                stack.append(num)
+            elif op == "-":
+                stack.append(-num)
+            elif op == "*":
+                stack.append(stack.pop() * num)
+            else:
+                stack.append(int(stack.pop() / num))
+            if index < len(s):
+                op = s[index]
+            index += 1
+            num = 0
+        return sum(stack)
