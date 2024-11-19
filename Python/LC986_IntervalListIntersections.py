@@ -15,3 +15,19 @@ class Solution:
                 else:
                     i, j = i + 1, j + 1
         return res
+
+    def intervalIntersection(self, firstList: List[List[int]], secondList: List[List[int]]) -> List[List[int]]:
+        """
+        Seems to be more concise
+        """
+        i, j, M, N = 0, 0, len(firstList), len(secondList)
+        res = []
+        while i < M and j < N:
+            a, b = firstList[i], secondList[j]
+            if a[0] <= b[0] <= a[1] or b[0] <= a[0] <= b[1]:
+                res.append([max(a[0], b[0]), min(a[1], b[1])])
+            if a[1] < b[1]:
+                i += 1
+            else:
+                j += 1
+        return res
