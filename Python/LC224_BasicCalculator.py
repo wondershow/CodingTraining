@@ -60,8 +60,9 @@ def calculate1(self, s: str) -> int:
         When there is a ")", first add cur to  res, then times it with the stack top, 
         then add to the next stack top.
 
-        1 + 4 - (8 + 7 - 3)
-                 | [0, 1, 5, -1]    
+        1 + 4 - (8 +  (6 - 4) - 7 - 3)
+                 ^ [5, -1] => when cursor is here, the stack has 5, -1 meaning, the tallied result is 5 until before the "(" and the -1 means the sign before the "(" is "-"
+                       ^ [5, - 1, 8, 1] => When cursor is here, the stack has (5, -1, 8, 1), meaning at current level, the tallied result right before (the second) "(" is 8, and the sign right before "(" is "+"
 
         """
         stack, res, cur, sign = [], 0, 0, 1
