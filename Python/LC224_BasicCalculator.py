@@ -45,6 +45,46 @@ class Solution:
             do_op(num_stack, op_stack)
         #print(str(len(num_stack)))
         return num_stack[0]
-                
+
+def calculate1(self, s: str) -> int:
+        """
+        This method seems to be much easier.
+        We scan left to right, 
+        cur -> current number
+        sign -> last sign (+ or -)
+        res -> the result of current level (save parenthesis)
+        stack is used to track the nested case. 
+        When there is a "(", we push 2 items onto the stack, the current sum until the "("
+        and the sign (+ or -) right before the "(".
+
+        When there is a ")", first add cur to  res, then times it with the stack top, 
+        then add to the next stack top.
+
+        1 + 4 - (8 + 7 - 3)
+                 | [0, 1, 5, -1]    
+
+        """
+        stack, res, cur, sign = [], 0, 0, 1
+        for c in s:
+            if c.isdigit():
+                cur = (cur * 10) + int(c)
+            elif c in "+-":
+                res += cur * sign
+                cur = 0
+                if c == "+":
+                    sign = 1
+                else:
+                    sign = -1
+            elif c == "(":
+                stack.append(res)
+                stack.append(sign)
+                cur, res = 0, 0
+                sign = 1
+            elif c == ")":
+                res += cur * sign
+                res *= stack.pop()
+                res += stack.pop()
+                cur = 0
+        return res + cur * sign
                 
                 
