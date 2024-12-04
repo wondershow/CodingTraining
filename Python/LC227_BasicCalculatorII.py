@@ -102,20 +102,26 @@ class Solution:
         """
         s = s.replace(" ", "")
         stack, num, op, index = [], 0, "+", 0
-        while index < len(s):
-            while index < len(s) and s[index].isdigit():
-                num = num * 10 + int(s[index])
+        """
+        Note the outmost loop can not be for loop, because within the for loop, we need to first read in a 
+        number, when it is at the end of the input stream, the outer for loop will be done, the rest of the
+        logic wont be carried out. 
+        """
+        while index < N:
+            # Note that boundary check first
+            while index < N and s[index].isdigit():
+                cur = cur * 10 + int(s[index])
                 index += 1
             if op == "+":
-                stack.append(num)
+                stack.append(cur)
             elif op == "-":
-                stack.append(-num)
+                stack.append(-cur)
             elif op == "*":
-                stack.append(stack.pop() * num)
+                stack.append(cur * stack.pop())
             else:
-                stack.append(int(stack.pop() / num))
-            if index < len(s):
+                stack.append(int(stack.pop() / cur))
+            if index < N:
                 op = s[index]
-            index += 1
-            num = 0
+                cur = 0
+                index += 1
         return sum(stack)
