@@ -16,3 +16,11 @@ class Solution:
             if c not in alphabet:
                 res += c
         return res
+
+
+    """
+    For this method, we pass in a customized key.
+    """
+    def customSortString1(self, order: str, s: str) -> str:
+        arr = sorted(list(s), key=lambda x: order.index(x) if x in order else 100)
+        return "".join(arr)
