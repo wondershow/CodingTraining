@@ -20,3 +20,16 @@ class Solution:
             res.append(str(expected))
         """
         return res
+
+    def findMissingRanges(self, nums: List[int], lower: int, upper: int) -> List[List[int]]:
+        res = []
+        expeced = lower
+        for num in nums:
+            if expeced < num:
+                res.append([expeced, num - 1])
+            expeced = num + 1
+
+        # Notice it is "<=" not <, as there is cases where lower = upper. 
+        if expeced <= upper:
+            res.append([expeced, upper])
+        return res
