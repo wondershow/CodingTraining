@@ -17,7 +17,7 @@ class Solution:
 
     1. when f(i) is smaller than k, that means to find S, we have to increase i to the right of the arr.
     2. when f(i - 1) < k and f(i) >= k meaning, arr[:(i + 1)] misses equal or more than k numbers. 
-        Therefore we have 1,2,3,4,..M,..., arr[i] (note that arr[i] might be equal to M)
+        Therefore we have found 1,2,3,4,..M,..., arr[i] (note that arr[i] might be equal to M)
         Since we are confident that arr[0...(i - 1)] (all together i numbers) present in our (1,2,...M) sequence, note that M is the Kth missing number. So we can say i + k = M so we find M.
     """
     def findKthPositive(self, arr: List[int], k: int) -> int:
