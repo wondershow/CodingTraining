@@ -31,3 +31,16 @@ class Solution:
             else:
                 j += 1
         return res
+
+    def intervalIntersection(self, firstList: List[List[int]], secondList: List[List[int]]) -> List[List[int]]:
+        res, l1, l2 = [], 0, 0
+        while l1 < len(firstList) and l2 < len(secondList):
+            start = max(firstList[l1][0], secondList[l2][0])
+            end = min(firstList[l1][1], secondList[l2][1])
+            if start <= end:
+                res.append([start, end])
+            if firstList[l1][1] < secondList[l2][1]:
+                l1 += 1
+            else:
+                l2 += 1
+        return res
