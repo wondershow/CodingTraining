@@ -24,5 +24,28 @@ class Solution:
                 return False
         return seen_digit
 
+
+class Solution2024:
+    def isNumber(self, s: str) -> bool:
+        hasDigit, hasE, hasDot, hasDigitAfterE = False, False, False, False
+        for i, c in enumerate(s):
+            if c in "+-":
+                if i > 0 and s[i - 1] not in 'eE':
+                    return False
+            elif c.isdigit():
+                hasDigit = True
+            elif c == ".":
+                if hasDot or hasE:
+                    return False
+                hasDot = True
+            elif c in "eE": # E
+                if not hasDigit or hasE:
+                    return False
+                hasE = True
+                hasDigit = False
+            else:
+                return False
+        return hasDigit
+
                 
         
