@@ -29,3 +29,12 @@ class Solution:
         topK = sorted(counts.items(), key=lambda item:item[1], reverse=True)[:k]
         return [a for a, b in topK]
 
+    from collections import Counter
+
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        # Count the frequency of each number
+        count = Counter(nums)
+        
+        # Sort by frequency (in descending order) but keep only the numbers
+        return [num for num, _ in count.most_common(k)]
+
