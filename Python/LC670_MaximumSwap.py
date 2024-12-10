@@ -29,3 +29,22 @@ class Solution:
             return int("".join(num))
         num[candidate_index[0]], num[candidate_index[1]] = num[candidate_index[1]], num[candidate_index[0]]
         return int("".join(num))
+
+    def maximumSwap(self, num: int) -> int:
+        """
+        Scan from right to left, 
+        we remember 1. maxIndex, maxVal
+        2. at each iteration, if the currval is smaller than maxVal, update the swap index
+        """
+        i, arr = 0, [int(a) for a in str(num)]
+        maxIndex, maxVal, candidate = len(arr) - 1, arr[-1], []
+        for i in range(len(arr) - 1, -1, -1):
+            if arr[i] > maxVal:
+                maxVal = arr[i]
+                maxIndex = i
+            elif arr[i] < maxVal:
+                candidate = [i, maxIndex]
+        if not candidate:
+            return num
+        arr[candidate[0]], arr[candidate[1]] = arr[candidate[1]], arr[candidate[0]]
+        return int("".join([str(a) for a in arr]))
