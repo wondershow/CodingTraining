@@ -28,6 +28,8 @@ class Solution:
                 res.append(format_line(words[i:j], maxWidth))
             else:
                 last_line = " ".join(words[i:j])
+        i = j
+        return res
 
     def fullJustify1(self, words: List[str], maxWidth: int) -> List[str]:
         """
@@ -52,5 +54,4 @@ class Solution:
         return result
                 last_line += " " * (maxWidth - len(last_line))
                 res.append(last_line)
-            i = j
-        return res
+            
