@@ -49,19 +49,17 @@ class Solution:
         This method is much easier but it requires extra space. (Not in-pace)
         """
         def quick_select(array, k):
-            pivot = random.choice(array)
-            large, equal, small = [], [], []
-            for num in array:
-                if num < pivot:
-                    small.append(num)
-                elif num > pivot:
-                    large.append(num)
-                else:
-                    equal.append(num)
-            if k <= len(large):
-                return quick_select(large, k)
-            elif len(large) + len(equal) < k:
-                return quick_select(small, k - (len(large) + len(equal)))
+            small, equal, large = [], [], []
+        pivot = random.choice(nums)
+        for num in nums:
+            if num < pivot:
+                small.append(num)
+            elif num == pivot:
+                equal.append(num)
+            else:
+                large.append(num)
+        if k <= len(large):
+            return self.findKthLargest(large, k)
+        elif len(large) < k <= len(large) + len(equal):
             return pivot
-
-        return quick_select(nums, k)
+        return self.findKthLargest(small, k - (len(large) + len(equal)))
