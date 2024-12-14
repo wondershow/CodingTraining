@@ -28,6 +28,26 @@ class TimeMap:
         else:
             return self.keys[key][0][index]
 
+
+class TimeMap:
+
+    def __init__(self):
+        """
+        Look at this much more concise one:
+        Note that bisect is the same as bisect_right
+        """
+        self.store = defaultdict(list)
+
+    def set(self, key: str, value: str, timestamp: int) -> None:
+        self.store[key].append([timestamp, value])
+
+    def get(self, key: str, timestamp: int) -> str:
+        if key not in self.store:
+            return ""
+        index = bisect.bisect(self.store[key], [timestamp, chr(127)])
+        if index == 0:
+            return ""
+        return self.store[key][index - 1][1]
             
 
 
