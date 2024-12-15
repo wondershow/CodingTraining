@@ -45,3 +45,32 @@ class Solution:
                 ipNum += size1
                 n -= size1
         return res
+
+    def ipToCIDR(self, ip: str, n: int) -> List[str]:
+        def ip_to_int(ip):
+            # Convert IP address to integer
+            return int(''.join([bin(int(x)+256)[3:] for x in ip.split('.')]), 2)
+
+        def int_to_ip(num):
+            # Convert integer back to IP address
+            return '.'.join([str((num >> i) & 255) for i in [24, 16, 8, 0]])
+
+        start = ip_to_int(ip)
+        result = []
+
+        while n > 0:
+            mask = 0
+            """
+            each time reduce to the least siginificant 1 of star if possible. Otherwie choose 
+            find the LSB of n and LSB of start
+            """
+            while mask < 32 and n >= (1 << mask) and (start & ((1 << mask) - 1)) == 0:
+                mask += 1
+            mask -= 1
+            result.append(f'{int_to_ip(start)}/{32 - mask}')
+            count = 1 << mask
+            start += count
+            n -= count
+        
+        return result
+
