@@ -36,3 +36,36 @@ class Solution:
                 visited.add(parent[node])
                 dq.append((path + "U", parent[node]))
         return ""
+
+    class Solution:
+    def getDirections(self, root: Optional[TreeNode], startValue: int, destValue: int) -> str:
+        """
+        This seems to be much easire and efficient.
+        We first use backtracking to get the path from root to both nodes
+        Then find the LCA (using both path). 
+        from start node, we do "U", from LCA to dest, we use the path as is.
+        """
+        def getPath(node, target, path):
+            if not node:
+                return False
+            if node.val == target:
+                return True
+            path.append("L")
+            if getPath(node.left, target, path):
+                return True
+            path.pop()
+
+            path.append("R")
+            if getPath(node.right, target, path):
+                return True
+            path.pop()
+
+        rootToStart, rootToDest = [], []
+        getPath(root, startValue, rootToStart)
+        getPath(root, destValue, rootToDest)
+        index = 0
+        while index < min(len(rootToStart), len(rootToDest)):
+            if rootToStart[index] != rootToDest[index]:
+                break
+            index += 1
+        return "U" * (len(rootToStart) - index) + "".join(rootToDest[index:])
