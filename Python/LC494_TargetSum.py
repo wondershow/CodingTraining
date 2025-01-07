@@ -1,8 +1,8 @@
 class Solution:
-        """
-        Intersting when the input size is 24, 2^24 will not work anymore.
-        So we have to use memo.
-        """
+    """
+    Intersting when the input size is 24, 2^24 will not work anymore.
+    So we have to use memo.
+    """
     def findTargetSumWays(self, nums: List[int], target: int) -> int:
         def dfs(nums, index, remain, memo):
             if index == len(nums):
