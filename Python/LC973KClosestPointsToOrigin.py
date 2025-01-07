@@ -27,7 +27,6 @@ class Solution:
     QuickSelect version
     """
     def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
-        def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
         aux = [(x ** 2 + y ** 2, x, y) for x , y in points]
     
         def quick_divde(aux, lo, hi, rank):
