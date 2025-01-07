@@ -1,11 +1,10 @@
 class Solution:
-  """
-  The key of how to avoid duplicates when we enter the for loop, 
-  check the curr val and its predecessor, make sure we do not skip same values.
-  """
+    """
+    The key of how to avoid duplicates when we enter the for loop, 
+    check the curr val and its predecessor, make sure we do not skip same values.
+    """
     def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
         candidates.sort()
-
         def helper(candidates, pos, remaining, path, res):
             if remaining <= 0:
                 if remaining == 0:
