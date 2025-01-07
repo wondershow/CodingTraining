@@ -6,9 +6,9 @@ class Solution(object):
         :rtype: List[List[int]]
         """
         def search(i, path, res):
-          """
-          Basic back tracking. At each poistion, there are 2 options, add or not add.
-          """
+            """
+            Basic back tracking. At each poistion, there are 2 options, add or not add.
+            """
             if len(path) == k:
                 res.append(path[:])
                 return
