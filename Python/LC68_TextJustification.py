@@ -52,6 +52,3 @@ class Solution:
         lastLine += " " * (maxWidth - len(lastLine))
         result.append(lastLine)
         return result
-                last_line += " " * (maxWidth - len(last_line))
-                res.append(last_line)
-            
