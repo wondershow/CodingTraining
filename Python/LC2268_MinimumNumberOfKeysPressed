@@ -1,0 +1,9 @@
+class Solution:
+    def minimumKeypresses(self, s: str) -> int:
+        freq = Counter(s)
+        res, keyPressed = 0, 0
+        for i, val in enumerate(sorted(freq.values(), reverse=True)):
+            if i % 9 == 0:
+                keyPressed += 1
+            res += val * keyPressed
+        return res
