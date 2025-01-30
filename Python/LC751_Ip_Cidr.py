@@ -74,3 +74,23 @@ class Solution:
         
         return result
 
+    # This version is eaier for the ipstr <=> ip val conversion. 
+    def ipToCIDR(self, ip: str, n: int) -> List[str]:
+        def ipToNum(ipStr):
+            return sum([int(a) * b for a, b in zip(ipStr.split("."), [1 << 24, 1 << 16, 1 << 8, 1])])
+        
+        def numToIp(val):
+            return ".".join([str( (val >> (8 * shift)) % 256) for shift in range(3, -1, -1)])
+            
+        res = []
+        start = ipToNum(ip)
+        while n > 0:
+            mask = 0
+            while mask < 32 and (start & (1 << mask) - 1) == 0 and n >= (1 << mask):
+                mask += 1
+            mask -= 1
+            res.append(f'{numToIp(start)}/{32 - mask}')
+            start += (1 << mask)
+            n -= (1 << mask)
+        return res
+
