@@ -24,4 +24,17 @@
             pre = running
             #print("{} {} {} {}".format(seen, i, running, v))
         return False
+
+   def checkSubarraySum(self, nums: List[int], k: int) -> bool:
+        seen, total = {0:-1}, 0
+        for i, num in enumerate(nums):
+            #total += num
+            total = (total + num) % k
+            # Not the next 2 line is important
+            if total in seen: # when we see this mod in the seen, dont update as we want to log the first mod index
+                if i - seen[total] > 1: 
+                    return True
+            else:
+                seen[total] = i
+        return False
             
